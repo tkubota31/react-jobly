@@ -10,7 +10,7 @@ function Routes () {
                 <Routes>
                     <Route exact path="/" element={<Home/>} />
                     <Route exact path="/companies" element={<CompanyList/>} />
-                    <Route exact path="/companies/:id" element={<CompanyDetail/>}/>
+                    <Route exact path="/companies/:handle" element={<CompanyDetail/>}/>
                     <Route exact path="jobs" element={<JobList />}/>
                     <Route exact path ="/login" element={<LoginForm />}/>
                     <Route exact path ="/signup" element={<SignupForm />}/>
