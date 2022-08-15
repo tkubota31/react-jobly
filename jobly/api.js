@@ -43,9 +43,17 @@ class JoblyApi {
     return res.company;
   }
 
+
+//get a list of all companies using name
   static async getCompanies(name){
     let res = await this.request("companies",{name})
     return res.companies
+  }
+
+  //get a list of all jobs using title parameter
+  static async getJobs(title){
+    let res = await this.request("jobs",{title})
+    return res.jobs
   }
 
   // obviously, you'll add a lot here ...
