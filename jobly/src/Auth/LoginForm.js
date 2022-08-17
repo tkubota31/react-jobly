@@ -50,4 +50,4 @@ function LoginForm({login}){
     )
 }
 
-export default LogingForm
+export default LoginForm
