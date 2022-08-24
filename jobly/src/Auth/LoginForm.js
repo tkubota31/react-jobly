@@ -1,15 +1,15 @@
 import React, {useState} from "react"
-import {useHistory} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 
 function LoginForm({login}){
-    const history = useHistory()
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({username : "",  password: ""})
 
     async function handleSubmit(e){
         e.preventDefault()
         let result = await login(formData);
         if(result.success){
-            history.push("/companies")
+            navigate("/companies")
         } else {
             setFormData({username:"", password:""})
         }
@@ -26,20 +26,21 @@ function LoginForm({login}){
             <div>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label for="username">Username</label>
+                        <label htmlFor="username">Username</label>
                             <input name="username"
-                                    value = {formData.username}
+                                    value = {formData.username || ""}
                                     onChange={handleChange}
                                     type="text"
                                     required
                                     placeholder="username" />
                     </div>
                     <div>
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input name="password"
-                               value={formData.password}
+                               value={formData.password || ""}
                                onChange={handleChange}
                                type= "password"
+                               placeholder="password"
                                required />
                     </div>
 

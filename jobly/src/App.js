@@ -5,7 +5,8 @@ import UserContext from "./auth/UserContext"
 import Navigation from "./routes/Navigation"
 import Routes from "./routes/Routes"
 import jwt from "jsonwebtoken"
-import JoblyApi from "../api"
+import JoblyApi from "./api"
+import LoadingPage from "./general/LoadingPage"
 
 
 function App() {
@@ -61,7 +62,31 @@ function App() {
       return {success: false, err}
     }
     }
+
+    function hasAppliedToJob(id){
+      return applicationIds.has(id);
+    }
+
+    function applyToJob(id){
+      if(hasAppliedToJob(id)) return;
+      JoblyApi.applyToJob(currentUser.username, id);
+      setApplicationIds(new Set([...applicationIds, id]));
+    }
+
+    if (!infoLoaded) return <LoadingPage />;
+
+    return (
+      <BrowserRouter>
+        <UserContext.Provider
+          value ={{currentUser, setCurrentUser, hasAppliedToJob, applyToJob}}>
+            <div>
+              <Navigation logout={logout} />
+              <Routes login={login} signup={signup} />
+            </div>
+          </UserContext.Provider>
+      </BrowserRouter>
+    )
   }
-}
+
 
 export default App;

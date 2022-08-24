@@ -1,5 +1,6 @@
 import React, {useState} from "react"
-import {useHistory} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
+import Alert from "../general/Alert"
 
 function SignupForm({signup}){
     let initialState = {
@@ -7,23 +8,23 @@ function SignupForm({signup}){
         password: "",
         firstName: "",
         lastName: "",
-        email: ""
+        email: "",
     }
-    const history = useHistory()
+    const navigate = useNavigate()
     const[formData, setFormData] = useState({initialState})
+    const [formErrors, setFormErrors] = useState([])
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault()
         let result = await signup(formData)
         if(result.success){
-            history.push("/companies")
+            navigate("/companies")
         } else{
-            setFormData(initialState)
+            setFormErrors(result.errors)
         }
     }
 
     function handleChange(e){
-        e.preventDefault()
         const{name,value} = e.target
         setFormData(fData => ({...fData, [name]: value}))
     }
@@ -34,49 +35,54 @@ function SignupForm({signup}){
             <div>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label for="username">Username</label>
+                        <label htmlFor="username">Username</label>
                         <input name="username"
-                               value={formData.username}
+                               value={formData.username || ""}
                                onChange={handleChange}
-                               type="text"
                         />
                     </div>
 
                     <div>
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input name="password"
                                type="password"
-                               value={formData.password}
+                               value={formData.password || ""}
                                onChange={handleChange}
                         />
                     </div>
 
                     <div>
-                        <label for="firstName">First Name</label>
+                        <label htmlFor="firstName">First Name</label>
                         <input name="firstName"
-                               value={formData.firstName}
+                               value={formData.firstName || ""}
                                onChange={handleChange}
                                type="text"
                         />
                     </div>
 
                     <div>
-                        <label for="lastName">Last Name</label>
+                        <label htmlFor="lastName">Last Name</label>
                         <input name="lastName"
-                               value={formData.lastName}
+                               value={formData.lastName || ""}
                                onChange={handleChange}
                                type="text"
                         />
                     </div>
 
                     <div>
-                        <label for="email">Email</label>
+                        <label htmlFor="email">Email</label>
                         <input name="email"
-                               value={formData.email}
+                               value={formData.email || ""}
                                onChange={handleChange}
                                type="email"
                         />
                     </div>
+
+                    {formErrors.length
+                    ? <Alert type="danger" messages = {formErrors}/>
+                        : null
+                        }
+
                     <button onSubmit={handleSubmit}>Submit</button>
                 </form>
             </div>

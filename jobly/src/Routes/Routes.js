@@ -1,25 +1,34 @@
 import React from "react"
-import {BrowserRouter,Routes,Route} from "react-router-dom"
+import {Routes ,Route, Navigate} from "react-router-dom"
+import HomePage from "../homepage/Homepage"
+import CompanyList from "../company/CompanyList"
+import CompanyDetail from "../company/CompanyDetail"
+import JobList from "../jobs/JobList"
+import LoginForm from "../auth/LoginForm"
+import SignupForm from "../auth/SignupForm"
+import ProfileForm from "../profile/ProfileForm"
+import PrivateRoute from "./PrivateRoute"
 
-function Routes () {
+function AllRoutes ({login, signup}) {
 
 
     return(
         <div>
-            <BrowserRouter>
                 <Routes>
-                    <Route exact path="/" element={<Home/>} />
-                    <Route exact path="/companies" element={<CompanyList/>} />
-                    <Route exact path="/companies/:handle" element={<CompanyDetail/>}/>
-                    <Route exact path="jobs" element={<JobList />}/>
-                    <Route exact path ="/login" element={<LoginForm />}/>
-                    <Route exact path ="/signup" element={<SignupForm />}/>
-                    <Route exact path="/profile" element={<Profile />} />
-                    <Route element={<Home/>}/>
+                    <Route exact path="/" element={<HomePage/>} />
+                    <Route exact path="/companies" element={<PrivateRoute/>}>
+                        <Route exact path="/companies" element ={<CompanyList/>} />
+                    </Route>
+                    <Route path="/companies/:handle" element={<PrivateRoute><CompanyDetail /></PrivateRoute>} />
+                    <Route path = "/jobs" element={<PrivateRoute><JobList/></PrivateRoute>} />
+                    <Route exact path ="/login" element={<LoginForm login={login}/>}/>
+                    <Route exact path ="/signup" element={<SignupForm signup={signup} />}/>
+                    <Route path="/profile" element ={<PrivateRoute><ProfileForm /></PrivateRoute>} />
+                    <Route path="/" element={<Navigate to="/"/>}/>
+
                 </Routes>
-
-            </BrowserRouter>
-
         </div>
     )
 }
+
+export default AllRoutes

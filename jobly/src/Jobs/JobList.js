@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react"
 import JoblyApi from "../api"
+import JobCardList from "./JobCardList"
 
 function JobList(){
 

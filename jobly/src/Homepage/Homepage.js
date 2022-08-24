@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 import UserContext from "../auth/UserContext"
 
 function Homepage(){
-    const {currentUser} = UserContext(UserContext)
+    const {currentUser} = useContext(UserContext)
 
     return(
        <div>

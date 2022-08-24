@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
-import JoblyApi from "../../api"
-import CompanyCard from "/CompanyCard"
+import JoblyApi from "../api"
+import CompanyCard from "./CompanyCard"
 
 function CompanyList(){
     const [companies,setCompanies] = useState(null);
