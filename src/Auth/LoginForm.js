@@ -32,7 +32,9 @@ function LoginForm({login}){
                                     onChange={handleChange}
                                     type="text"
                                     required
+                                    autoComplete ="off"
                                     placeholder="username" />
+
                     </div>
                     <div>
                         <label htmlFor="password">Password</label>
@@ -41,6 +43,7 @@ function LoginForm({login}){
                                onChange={handleChange}
                                type= "password"
                                placeholder="password"
+                               autoComplete ="off"
                                required />
                     </div>
 

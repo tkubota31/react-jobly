@@ -6,7 +6,8 @@ import UserContext from "../auth/UserContext"
 function PrivateRoute({exact, path, children}){
     const {currentUser} = useContext(UserContext);
 
-    if (!currentUser) {return <Navigate to="login" />
+    if (!currentUser) {
+        return <Navigate to="/login" />
 }
 
     return(

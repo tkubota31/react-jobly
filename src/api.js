@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 /** API Class.
  *
@@ -53,7 +53,7 @@ class JoblyApi {
   //get a list of all jobs using title parameter
   static async getJobs(title){
     let res = await this.request("jobs",{title})
-    return res.jobs
+    return res.jobs;
   }
 
   // get current User
@@ -70,6 +70,15 @@ class JoblyApi {
   static async signup(data){
     let res = await this.request(`auth/register`, data, "post");
     return res.token
+  }
+
+  static async saveProfile(username, data) {
+    let res = await this.request(`users/${username}`, data, "patch");
+    return res.user;
+  }
+
+  static async applyToJob(username, id) {
+    await this.request(`users/${username}/jobs/${id}`, {}, "post");
   }
 }
 

@@ -16,14 +16,12 @@ function AllRoutes ({login, signup}) {
         <div>
                 <Routes>
                     <Route exact path="/" element={<HomePage/>} />
-                    <Route exact path="/companies" element={<PrivateRoute/>}>
-                        <Route exact path="/companies" element ={<CompanyList/>} />
-                    </Route>
-                    <Route path="/companies/:handle" element={<PrivateRoute><CompanyDetail /></PrivateRoute>} />
-                    <Route path = "/jobs" element={<PrivateRoute><JobList/></PrivateRoute>} />
+                    <Route exact path="/companies" element={<PrivateRoute><CompanyList /></PrivateRoute>} />
+                    <Route exact path="/companies/:handle" element={<PrivateRoute><CompanyDetail /></PrivateRoute>} />
+                    <Route exact path = "/jobs" element={<PrivateRoute><JobList/></PrivateRoute>} />
                     <Route exact path ="/login" element={<LoginForm login={login}/>}/>
                     <Route exact path ="/signup" element={<SignupForm signup={signup} />}/>
-                    <Route path="/profile" element ={<PrivateRoute><ProfileForm /></PrivateRoute>} />
+                    <Route exact path="/profile" element ={<PrivateRoute><ProfileForm /></PrivateRoute>} />
                     <Route path="/" element={<Navigate to="/"/>}/>
 
                 </Routes>
