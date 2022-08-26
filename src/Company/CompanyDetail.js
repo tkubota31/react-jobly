@@ -1,31 +1,41 @@
-import React, {useEffect, useState} from "react"
-import {useParams} from "react-router-dom"
-import JoblyApi from "../api"
-import JobCardList from "../jobs/JobCardList"
-import LoadingPage from "../general/LoadingPage"
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import JoblyApi from "../api";
+import JobCardList from "../jobs/JobCardList";
+import LoadingPage from "../general/LoadingPage";
 
-function CompanyDetail(){
-    const {handle} = useParams()
+/** Company Detail page.
+ *
+ * Renders information about company, along with the jobs at that company.
+ *
+ * Routed at /companies/:handle
+ *
+ * Routes -> CompanyDetail -> JobCardList
+ */
 
-    const[company, setCompany] = useState(null)
+function CompanyDetail() {
+  const { handle } = useParams();
+  console.debug("CompanyDetail", "handle=", handle);
 
-    //get company at first render and do it only when the handle name changes.
-    useEffect(function getCompanyAndJobs(){
-        async function getCompany(){
-            setCompany(await JoblyApi.getCompany(handle))
-        }
-        getCompany(handle);
-    }, [handle])
+  const [company, setCompany] = useState(null);
 
-    if (!company) return <LoadingPage />
+  useEffect(function getCompanyAndJobsForUser() {
+    async function getCompany() {
+      setCompany(await JoblyApi.getCompany(handle));
+    }
 
-    return(
-        <div>
-            <h4>{company.name}</h4>
-            <h5>{company.description}</h5>
-            <JobCardList jobs={company.jobs} />
-        </div>
-    )
+    getCompany();
+  }, [handle]);
+
+  if (!company) return <LoadingPage />;
+
+  return (
+      <div className="CompanyDetail col-md-8 offset-md-2">
+        <h4>{company.name}</h4>
+        <p>{company.description}</p>
+        <JobCardList jobs={company.jobs} />
+      </div>
+  );
 }
 
 export default CompanyDetail;

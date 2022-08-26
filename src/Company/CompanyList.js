@@ -1,36 +1,58 @@
-import React, {useState, useEffect} from "react"
-import JoblyApi from "../api"
-import CompanyCard from "./CompanyCard"
+import React, { useState, useEffect } from "react";
+import SearchForm from "../general/SearchForm";
+import JoblyApi from "../api";
+import CompanyCard from "./CompanyCard";
+import LoadingPage from "../general/LoadingPage";
 
-function CompanyList(){
-    const [companies,setCompanies] = useState(null);
+/** Show page with list of companies.
+ *
+ * On mount, loads companies from API.
+ * Re-loads filtered companies on submit from search form.
+ *
+ * This is routed to at /companies
+ *
+ * Routes -> { CompanyCard, SearchForm }
+ */
 
-    async function searchCompanies(name){
-        let companies = await JoblyApi.getCompanies(name);
-        setCompanies(companies)
-    }
+function CompanyList() {
+  console.debug("CompanyList");
 
-    useEffect(function getCompanyList(){
-        searchCompanies();
-    },[]);
+  const [companies, setCompanies] = useState(null);
 
-    return(
-        <div>
-            {companies.length ? (
-                <div>
-                    {companies.map(c =>(
-                        <CompanyCard
-                        key={c.handle}
-                        handle={c.handle}
-                        name={c.name}
-                        description={c.description}
-                        logoUrl={c.logoUrl} />
-                    ))}
+  useEffect(function getCompaniesOnMount() {
+    console.debug("CompanyList useEffect getCompaniesOnMount");
+    search();
+  }, []);
+
+  /** Triggered by search form submit; reloads companies. */
+  async function search(name) {
+    let companies = await JoblyApi.getCompanies(name);
+    setCompanies(companies);
+  }
+
+  if (!companies) return <LoadingPage />;
+
+  return (
+      <div className="CompanyList col-md-8 offset-md-2">
+        <SearchForm searchFor={search} />
+        {companies.length
+            ? (
+                <div className="CompanyList-list">
+                  {companies.map(c => (
+                      <CompanyCard
+                          key={c.handle}
+                          handle={c.handle}
+                          name={c.name}
+                          description={c.description}
+                          logoUrl={c.logoUrl}
+                      />
+                  ))}
                 </div>
             ) : (
-            <p> No results found</p> )}
-        </div>
-    );
+                <p className="lead">Sorry, no results were found!</p>
+            )}
+      </div>
+  );
 }
 
-export default CompanyList
+export default CompanyList;
