@@ -14,35 +14,30 @@ function AllRoutes ({login, signup}) {
 
     return(
         <div>
-                {/* <Routes>
-                    <Route exact path="/" element={<HomePage/>} />
-                    <Route exact path="/companies" element={<PrivateRoute/>}>
-                        <Route exact path="/companies" element={<CompanyList/>}/>
-                    </Route>
-                    <Route exact path="/companies/:handle" element={<PrivateRoute><CompanyDetail /></PrivateRoute>} />
-                    <Route exact path = "/jobs" element={<PrivateRoute><JobList/></PrivateRoute>} />
-                    <Route exact path ="/login" element={<LoginForm login={login}/>}/>
-                    <Route exact path ="/signup" element={<SignupForm signup={signup} />}/>
-                    <Route exact path="/profile" element ={<PrivateRoute><ProfileForm /></PrivateRoute>} />
-                    <Route path="/" element={<Navigate to="/"/>}/>
-                </Routes> */}
 
                 <Routes>
-                    <Route exact path="/" element={<HomePage/>} />
-                    <Route exact path="/companies/*" element={<PrivateRoute/>}>
-                        <Route exact path="/companies/*" element={<CompanyList/>}/>
-                    </Route>
-                    <Route exact path="/companies/:handle" element={<PrivateRoute/>}>
-                        <Route exact path="/companies/:handle" element={<CompanyDetail/>}/>
-                    </Route>
-                    <Route exact path="/jobs/*" element={<PrivateRoute/>}>
-                        <Route exact path="/jobs/*" element={<JobList/>}/>
-                    </Route>
-                    <Route exact path ="/login" element={<LoginForm login={login}/>}/>
-                    <Route exact path ="/signup" element={<SignupForm signup={signup} />}/>
-                    <Route exact path="/profile/*" element={<PrivateRoute/>}>
-                        <Route exact path="/profile/*" element={<ProfileForm/>}/>
-                    </Route>
+                    <Route  path="/"
+                            element={<HomePage/>} />
+                    <Route  path="/companies"
+                            element={<PrivateRoute>
+                                         <CompanyList />
+                                     </PrivateRoute>}/>
+                    <Route  path="/companies/:handle"
+                            element={<PrivateRoute>
+                                        <CompanyDetail />
+                                    </PrivateRoute>}/>
+                    <Route  path="/jobs"
+                            element={<PrivateRoute>
+                                        <JobList />
+                                     </PrivateRoute>}/>
+                    <Route  path ="/login"
+                            element={<LoginForm login={login}/>}/>
+                    <Route  path ="/signup"
+                            element={<SignupForm signup={signup} />}/>
+                    <Route  path="/profile"
+                            element={<PrivateRoute>
+                                        <ProfileForm/>
+                                    </PrivateRoute>}/>
                     <Route path="/" element={<Navigate to="/"/>}/>
 
                 </Routes>

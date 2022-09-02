@@ -15,7 +15,7 @@ import LoadingPage from "../general/LoadingPage";
  */
 
 function JobList() {
-  console.debug("JobList");
+  console.log("JobList");
 
   const [jobs, setJobs] = useState(null);
 
@@ -27,6 +27,8 @@ function JobList() {
   /** Triggered by search form submit; reloads jobs. */
   async function search(title) {
     let jobs = await JoblyApi.getJobs(title);
+    console.log("*********************")
+    console.log(jobs)
     setJobs(jobs);
   }
 
